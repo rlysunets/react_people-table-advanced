@@ -54,6 +54,7 @@ export const PeopleFilters = () => {
 
   const resetCenturies = () => {
     const params = new URLSearchParams(searchParams);
+
     params.delete('centuries');
     setSearchParams(params);
   };

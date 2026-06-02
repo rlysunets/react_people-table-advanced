@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { Person } from '../../types';
+import { Person } from '../types';
 
 type PersonLinkProps = {
   person: Person;

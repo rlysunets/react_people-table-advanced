@@ -23,7 +23,7 @@ export const PeoplePage = () => {
   const [error, setError] = useState('');
   const { slug } = useParams();
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const query = searchParams.get('query') || '';
   const sex = searchParams.get('sex') || 'all';
@@ -39,22 +39,24 @@ export const PeoplePage = () => {
     if (query) {
       const q = query.toLowerCase();
 
-      result = result.filter(p =>
-        p.name.toLowerCase().includes(q) ||
-        p.motherName?.toLowerCase().includes(q) ||
-        p.fatherName?.toLowerCase().includes(q)
+      result = result.filter(
+        p =>
+          p.name.toLowerCase().includes(q) ||
+          p.motherName?.toLowerCase().includes(q) ||
+          p.fatherName?.toLowerCase().includes(q),
       );
     }
 
     if (centuries.length) {
       result = result.filter(p => {
         const century = Math.ceil(p.born / 100);
+
         return centuries.includes(String(century));
       });
     }
 
     return result;
-  }, [people, searchParams]);
+  }, [people, centuries, query, sex]);
 
   useEffect(() => {
     getPeople()
@@ -88,12 +90,7 @@ export const PeoplePage = () => {
 
             <div className="column">
               <div className="box table-container">
-
-                {error && (
-                  <p data-cy="peopleLoadingError">
-                    {error}
-                  </p>
-                )}
+                {error && <p data-cy="peopleLoadingError">{error}</p>}
 
                 {!loading && <PeopleTable people={visiblePeople} slug={slug} />}
               </div>
