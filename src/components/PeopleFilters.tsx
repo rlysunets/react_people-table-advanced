@@ -60,7 +60,7 @@ export const PeopleFilters = () => {
   };
 
   const resetAllFilters = () => {
-    setSearchParams({});
+    setSearchParams(new URLSearchParams());
   };
 
   return (
