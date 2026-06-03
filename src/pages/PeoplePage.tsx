@@ -28,9 +28,11 @@ export const PeoplePage = () => {
   const query = searchParams.get('query') || '';
   const sex = searchParams.get('sex') || 'all';
   const centuries = searchParams.getAll('centuries');
+  const sort = searchParams.get('sort');
+  const order = searchParams.get('order');
 
   const visiblePeople = useMemo(() => {
-    let result = people;
+    let result = [...people];
 
     if (sex !== 'all') {
       result = result.filter(p => p.sex === sex);
@@ -55,8 +57,34 @@ export const PeoplePage = () => {
       });
     }
 
+    if (sort) {
+      result.sort((a, b) => {
+        let comparison = 0;
+
+        switch (sort) {
+          case 'name':
+            comparison = a.name.localeCompare(b.name);
+            break;
+
+          case 'sex':
+            comparison = a.sex.localeCompare(b.sex);
+            break;
+
+          case 'born':
+            comparison = a.born - b.born;
+            break;
+
+          case 'died':
+            comparison = a.died - b.died;
+            break;
+        }
+
+        return order === 'desc' ? -comparison : comparison;
+      });
+    }
+
     return result;
-  }, [people, centuries, query, sex]);
+  }, [people, sex, query, centuries, sort, order]);
 
   useEffect(() => {
     getPeople()
