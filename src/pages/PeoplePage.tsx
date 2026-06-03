@@ -58,24 +58,24 @@ export const PeoplePage = () => {
     }
 
     if (sort) {
-      result.sort((a, b) => {
+      result.sort((x, y) => {
         let comparison = 0;
 
         switch (sort) {
           case 'name':
-            comparison = a.name.localeCompare(b.name);
+            comparison = x.name.localeCompare(y.name);
             break;
 
           case 'sex':
-            comparison = a.sex.localeCompare(b.sex);
+            comparison = x.sex.localeCompare(y.sex);
             break;
 
           case 'born':
-            comparison = a.born - b.born;
+            comparison = x.born - y.born;
             break;
 
           case 'died':
-            comparison = a.died - b.died;
+            comparison = x.died - y.died;
             break;
         }
 
